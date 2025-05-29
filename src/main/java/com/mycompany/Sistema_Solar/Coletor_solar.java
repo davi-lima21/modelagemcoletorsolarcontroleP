@@ -10,29 +10,65 @@ public class Coletor_solar {
     private boolean primeiraExecucao = true;
     private final double vazaoNominal = 0.02;
     private double REFERENCIA;
+    private double Kp = 0.5;
+    private String CAMINHOCSV;
 
-    public Coletor_solar(double irradiacao_solar, double temperaturaAmbiente, double porcentagem_vazao, double referencia) {
+    public Coletor_solar(double irradiacao_solar, double temperaturaAmbiente, double porcentagem_vazao, double referencia, String caminhoCSV) {
         this.irradiacao_solar = irradiacao_solar;
         this.TEMPERATURA_AMBIENTE = temperaturaAmbiente;
         this.vazao = (porcentagem_vazao / 100.0) * vazaoNominal;
         this.REFERENCIA = referencia;
+        this.CAMINHOCSV = caminhoCSV;
     }
 
-    public double getIrradiacao(double horario) {
-        if (horario >= 7 && horario < 11) {
-            irradiacao_solar = 250 + (horario - 8) * 180;
-        } else if (horario >= 11 && horario <= 12) {
-            irradiacao_solar = 900 + (horario - 11) * 140;
-        } else if (horario > 12 && horario <= 14) {
-            irradiacao_solar = 1080 - (horario - 12) * 140;
-        } else if (horario > 14 && horario <= 17) {
-            irradiacao_solar = 950 - (horario - 14) * 130;
-        } else if (horario > 17 && horario <= 19) {
-            irradiacao_solar = 250 - (horario - 20) * 110;
-        } else {
-            irradiacao_solar = 50;
+    public void setCaminhoCSV(String caminho) {
+        this.CAMINHOCSV = caminho;
+    }
+
+    public String getCaminhoCSV() {
+        return CAMINHOCSV;
+    }
+
+    public double getTemperaturaAmbiente() {
+
+        return TEMPERATURA_AMBIENTE;
+    }
+
+    public void setTemperaturaAmbienteManual(double temperatura_ambiente_nova) {
+        this.TEMPERATURA_AMBIENTE = temperatura_ambiente_nova;
+    }
+
+    public void setTemperaturaAmbiente(double horario, boolean atualizacaoAutomatica) {
+        if (!atualizacaoAutomatica) {
+            Ler_csv leitor = new Ler_csv(CAMINHOCSV);
+            double[] dados = leitor.retorna_dados(horario);
+            this.TEMPERATURA_AMBIENTE = dados[1];
         }
+
+    }
+
+    public double getIrradiacao() {
+//        if (horario >= 7 && horario < 11) {
+//            irradiacao_solar = 250 + (horario - 8) * 180;
+//        } else if (horario >= 11 && horario <= 12) {
+//            irradiacao_solar = 900 + (horario - 11) * 140;
+//        } else if (horario > 12 && horario <= 14) {
+//            irradiacao_solar = 1080 - (horario - 12) * 140;
+//        } else if (horario > 14 && horario <= 17) {
+//            irradiacao_solar = 950 - (horario - 14) * 130;
+//        } else if (horario > 17 && horario <= 19) {
+//            irradiacao_solar = 250 - (horario - 20) * 110;
+//        } else {
+//            irradiacao_solar = 50;
+//        }
+
         return irradiacao_solar;
+    }
+
+    public void setIrradiacao(double horario) {
+        Ler_csv leitor = new Ler_csv(CAMINHOCSV);
+        double[] dados = leitor.retorna_dados(horario);
+        this.irradiacao_solar = dados[0];
     }
 
     public void setReferencia(double valorReferencia) {
@@ -43,7 +79,9 @@ public class Coletor_solar {
         return REFERENCIA;
     }
 
-    
+    public double setKp(double Kpnovo) {
+        return this.Kp = Kpnovo;
+    }
 
     public void setPorcentagemVazao(double porcentagem) {
         this.vazao = (porcentagem / 100.0) * vazaoNominal;
@@ -55,11 +93,6 @@ public class Coletor_solar {
 
     public void setIrradiacaoSolar(double irradiacao) {
         this.irradiacao_solar = irradiacao;
-    }
-
-    public void setTemperaturaAmbiente(double temperaturaAmbiente) {
-        // opcionalmente, atualize a entrada também
-        this.TEMPERATURA_AMBIENTE = temperaturaAmbiente;
     }
 
     public void setVazao(double vazao) {
@@ -74,15 +107,18 @@ public class Coletor_solar {
         return TEMPERATURA_ENTRADA;
     }
 
+    public double getKp() {
+        return Kp;
+    }
+
     public void controleVazao(double temperaturaSaida) {
-        double erro = temperaturaSaida - REFERENCIA;
-        double ganho = 0.5; // Sensibilidade do controle
+        double erro = temperaturaSaida - REFERENCIA; // Sensibilidade do controle
 
         // Faixa morta (histerese)
         double faixa = 0.5; // °C
 
         if (Math.abs(erro) > faixa) {
-            double ajuste = ganho * erro;
+            double ajuste = Kp * erro;
 
             double novaPorcentagem = getPorcentagemVazao() + ajuste;
 
