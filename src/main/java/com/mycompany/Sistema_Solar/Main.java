@@ -3,12 +3,31 @@
  */
 package com.mycompany.Sistema_Solar;
 
+import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.UIManager;
+
 /**
  *
  * @author Davil
  */
 public class Main {
+
     public static void main(String[] args) {
+
+        try {
+            // Aplica o tema FlatLaf (claro)
+            UIManager.setLookAndFeel(new FlatLightLaf());
+
+            UIManager.put("Component.arc", 10);
+            UIManager.put("TextComponent.arc", 10);
+            UIManager.put("Button.arc", 10);
+            UIManager.put("ScrollBar.thumbArc", 999);
+            UIManager.put("ScrollBar.trackArc", 999);
+            UIManager.put("Panel.arc", 10);
+        } catch (Exception ex) {
+            System.err.println("Erro ao aplicar FlatLaf: " + ex);
+        }
+
         // Inicia a interface gráfica
         java.awt.EventQueue.invokeLater(() -> {
             new Sistema_Solar_Interface().setVisible(true);

@@ -101,7 +101,7 @@ public class GraficoTemperatura {
         // Configurar o eixo Y para definir um intervalo mínimo
         NumberAxis yAxis = (NumberAxis) chart.getXYPlot().getRangeAxis();
         yAxis.setAutoRangeIncludesZero(false); // Garante que o zero não seja sempre incluído
-        yAxis.setRange(0, 80); // Defina um intervalo adequado, ajuste conforme necessário
+        //yAxis.setRange(0, 80); // Defina um intervalo adequado, ajuste conforme necessário
 
         return chart;
 
@@ -159,7 +159,7 @@ public class GraficoTemperatura {
         datasetIrradiacao.addSeries(serieIrradiacao);
 
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
-                "Temperatura Ambiente e Irradiação Solar",
+                "Temp. Ambiente e Irradiancia Solar",
                 "Tempo (s)",
                 "Temperatura (°C)",
                 datasetTemperatura,

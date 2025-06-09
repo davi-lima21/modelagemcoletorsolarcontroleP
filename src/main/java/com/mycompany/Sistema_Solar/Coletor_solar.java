@@ -14,7 +14,7 @@ public class Coletor_solar {
     private String CAMINHOCSV;
     private double Ki = 0.1; // Valor inicial, pode ser ajustado
     private double INTEGRAL = 0.0;
-    
+
     public Coletor_solar(double irradiacao_solar, double temperaturaAmbiente, double porcentagem_vazao, double referencia, String caminhoCSV) {
         this.irradiacao_solar = irradiacao_solar;
         this.TEMPERATURA_AMBIENTE = temperaturaAmbiente;
@@ -112,40 +112,42 @@ public class Coletor_solar {
     public double getKp() {
         return Kp;
     }
-    
-    public void setKi(double KiNovo){
+
+    public double getKi() {
+        return Ki;
+    }
+
+    public void setKi(double KiNovo) {
         this.Ki = KiNovo;
     }
 
     private double somaErro = 0;
 
+    public void controleVazao(double temperaturaSaida) {
+        double erro = temperaturaSaida - REFERENCIA;
 
-public void controleVazao(double temperaturaSaida, double deltaTempo) {
-    double erro = temperaturaSaida - REFERENCIA;
+        // Faixa morta (histerese)
+        double faixa = 0;
 
-    // Faixa morta (histerese)
-    double faixa = 0;
+        if (Math.abs(erro) > faixa) {
+            INTEGRAL += erro; // Ação integral
 
-    if (Math.abs(erro) > faixa) {
-        INTEGRAL += erro * deltaTempo; // Ação integral
+            double ajuste = Kp * erro + Ki * INTEGRAL;
 
-        double ajuste = Kp * erro + Ki * INTEGRAL;
+            double novaPorcentagem = getPorcentagemVazao() + ajuste;
 
-        double novaPorcentagem = getPorcentagemVazao() + ajuste;
+            if (novaPorcentagem > 100) {
+                novaPorcentagem = 100;
+            } else if (novaPorcentagem < 10) {
+                novaPorcentagem = 10;
+            }
 
-        if (novaPorcentagem > 100) {
-            novaPorcentagem = 100;
-        } else if (novaPorcentagem < 10) {
-            novaPorcentagem = 10;
+            setPorcentagemVazao(novaPorcentagem);
+            System.out.println("Ajustando vazão para: " + novaPorcentagem + "%");
+        } else {
+            System.out.println("Dentro da faixa. Vazão mantida em: " + getPorcentagemVazao() + "%");
         }
-
-        setPorcentagemVazao(novaPorcentagem);
-        System.out.println("Ajustando vazão para: " + novaPorcentagem + "%");
-    } else {
-        System.out.println("Dentro da faixa. Vazão mantida em: " + getPorcentagemVazao() + "%");
     }
-}
-
 
     public double calcularTemperaturaSaida() {
         final double CALOR_ESPECIFICO_AGUA = 4186;
