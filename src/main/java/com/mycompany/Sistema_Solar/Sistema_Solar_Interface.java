@@ -148,9 +148,10 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
 
         // Atualiza a interface
         temp_saida_graf.revalidate();
-        temp_saida_graf.repaint();
+
         temp_ambiente_entrada.revalidate();
         temp_ambiente_entrada.repaint();
+        temp_saida_graf.repaint();
 
         // Abre a interface de definição dos dados
         Definir_Dados_Interface definirDados = new Definir_Dados_Interface(this, true);
@@ -180,9 +181,10 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
 
         // Atualiza a interface depois que todo o gráfico foi plotado
         temp_saida_graf.revalidate();
-        temp_saida_graf.repaint();
+
         temp_ambiente_entrada.revalidate();
         temp_ambiente_entrada.repaint();
+        temp_saida_graf.repaint();
     }
 
     /**
@@ -868,7 +870,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
 
         double irradiacao = coletor.getIrradiacao();
 
-        coletor.controleVazao(tempSaida);
+        coletor.controleVazao(tempSaida, 0.167);
         grafico.atualizarGrafico(tempSaida, temperatura_entrada, temperatura_ambiente, irradiacao,
                 tempoAtual, vazao, temperatura_referencia);
         if (!atualizacaoAutomaticaAtiva) {

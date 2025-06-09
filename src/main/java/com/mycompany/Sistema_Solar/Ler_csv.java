@@ -17,6 +17,9 @@ public class Ler_csv {
     public double[] retorna_dados(double horaBuscada) {
         double[] vetor = {-1, -1}; // valores padrão caso não encontre
 
+        // 🔸 Arredonda para o mais próximo de 0.5 ou inteiro
+        double horaArredondada = Math.round(horaBuscada * 2) / 2.0;
+
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             boolean primeiraLinha = true;
             while ((line = br.readLine()) != null) {
@@ -26,15 +29,15 @@ public class Ler_csv {
                     continue;
                 }
 
-                String horaSolar = fields[0];
+                double horaCSV = Double.parseDouble(fields[0]);
 
-                if (horaSolar.equals(String.format("%02.0f", horaBuscada))) { 
+                if (horaCSV == horaArredondada) {
                     vetor[0] = Double.parseDouble(fields[1]); // Irradiação
                     vetor[1] = Double.parseDouble(fields[2]); // Temperatura
                     break;
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
 

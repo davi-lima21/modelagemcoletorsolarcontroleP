@@ -15,8 +15,6 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.data.time.Hour;
-import org.jfree.data.time.Minute;
 
 public class GraficoTemperatura {
 
