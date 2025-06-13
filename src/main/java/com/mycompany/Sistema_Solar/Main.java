@@ -30,7 +30,7 @@ public class Main {
 
         // Inicia a interface gráfica
         java.awt.EventQueue.invokeLater(() -> {
-            new Sistema_Solar_Interface().setVisible(true);
+            new TelaInicial().setVisible(true);
         });
     }
 }
