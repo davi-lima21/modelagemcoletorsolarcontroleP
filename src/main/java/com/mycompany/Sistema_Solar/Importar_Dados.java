@@ -14,6 +14,18 @@ import javax.swing.JFileChooser;
 public class Importar_Dados extends javax.swing.JDialog {
 
     String caminho;
+    
+    private int returnStatus = RET_CANCEL;
+
+    /**
+     * A return status code - returned if Cancel button has been pressed
+     */
+    public static final int RET_CANCEL = 0;
+    /**
+     * A return status code - returned if OK button has been pressed
+     */
+    public static final int RET_OK = 1;
+
     /**
      * Creates new form Importar_Dados
      */
@@ -25,6 +37,12 @@ public class Importar_Dados extends javax.swing.JDialog {
     public String caminhoCSV() {
         System.out.println("O caminho enviado é " + caminho);
         return caminho;
+    }
+
+    private void doClose(int retStatus) {
+        returnStatus = retStatus;
+        setVisible(false);
+        dispose();
     }
 
     /**
@@ -42,6 +60,10 @@ public class Importar_Dados extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         botao_procurar_arquivo = new javax.swing.JToggleButton();
+        okButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        label_caminho = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -88,17 +110,42 @@ public class Importar_Dados extends javax.swing.JDialog {
             }
         });
 
+        okButton.setText("OK");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
+
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+
+        label_caminho.setText("Nenhum arquivo selecionado...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botao_procurar_arquivo)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(cancelButton))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(botao_procurar_arquivo)
+                            .addGap(34, 34, 34)
+                            .addComponent(label_caminho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(36, Short.MAX_VALUE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,9 +155,19 @@ public class Importar_Dados extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(botao_procurar_arquivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botao_procurar_arquivo)
+                    .addComponent(label_caminho))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(okButton)
+                    .addComponent(cancelButton))
+                .addContainerGap())
         );
+
+        getRootPane().setDefaultButton(okButton);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -124,6 +181,7 @@ public class Importar_Dados extends javax.swing.JDialog {
             File arquivoSelecionado = seletor.getSelectedFile();
             caminho = arquivoSelecionado.getAbsolutePath();
             System.out.println("Arquivo selecionado: " + caminho);
+            label_caminho.setText(arquivoSelecionado.getName());
 
             // Se quiser, pode colocar o caminho em um campo de texto, por exemplo:
             // campo_caminho_arquivo.setText(caminho);
@@ -131,6 +189,25 @@ public class Importar_Dados extends javax.swing.JDialog {
             System.out.println("Nenhum arquivo selecionado.");
         }
     }//GEN-LAST:event_botao_procurar_arquivoActionPerformed
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+
+        // Verificar se ambos são válidos antes de prosseguir
+        if (caminho == null) {
+            // Fechar a janela
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Nenhum Arquivo foi selecionado, você continuará usando dados do sistema",
+                    "ALERTA", javax.swing.JOptionPane.WARNING_MESSAGE);
+            doClose(RET_OK);
+        } else {
+            // Se os valores forem inválidos, a janela não fecha
+            doClose(RET_OK);
+        }
+    }//GEN-LAST:event_okButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        doClose(RET_CANCEL);
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,10 +253,14 @@ public class Importar_Dados extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton botao_procurar_arquivo;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel label_caminho;
+    private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 }

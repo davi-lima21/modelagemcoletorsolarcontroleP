@@ -12,6 +12,8 @@ public class Coletor_solar {
     private double REFERENCIA;
     private double Kp = 0.5;
     private String CAMINHOCSV;
+    private double Ki = 0.1; // Valor inicial, pode ser ajustado
+    private double INTEGRAL = 0.0;
 
     public Coletor_solar(double irradiacao_solar, double temperaturaAmbiente, double porcentagem_vazao, double referencia, String caminhoCSV) {
         this.irradiacao_solar = irradiacao_solar;
@@ -111,18 +113,29 @@ public class Coletor_solar {
         return Kp;
     }
 
+    public double getKi() {
+        return Ki;
+    }
+
+    public void setKi(double KiNovo) {
+        this.Ki = KiNovo;
+    }
+
+    private double somaErro = 0;
+
     public void controleVazao(double temperaturaSaida) {
-        double erro = temperaturaSaida - REFERENCIA; // Sensibilidade do controle
+        double erro = temperaturaSaida - REFERENCIA;
 
         // Faixa morta (histerese)
-        double faixa = 0.5; // °C
+        double faixa = 0;
 
         if (Math.abs(erro) > faixa) {
-            double ajuste = Kp * erro;
+            INTEGRAL += erro; // Ação integral
+
+            double ajuste = Kp * erro + Ki * INTEGRAL;
 
             double novaPorcentagem = getPorcentagemVazao() + ajuste;
 
-            // Limita a vazão entre 10% e 100%
             if (novaPorcentagem > 100) {
                 novaPorcentagem = 100;
             } else if (novaPorcentagem < 10) {
@@ -132,7 +145,7 @@ public class Coletor_solar {
             setPorcentagemVazao(novaPorcentagem);
             System.out.println("Ajustando vazão para: " + novaPorcentagem + "%");
         } else {
-            System.out.println("Dentro da faixa de controle. Vazão mantida em: " + getPorcentagemVazao() + "%");
+            System.out.println("Dentro da faixa. Vazão mantida em: " + getPorcentagemVazao() + "%");
         }
     }
 
