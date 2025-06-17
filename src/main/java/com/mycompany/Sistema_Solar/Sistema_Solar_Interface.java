@@ -1,9 +1,9 @@
 package com.mycompany.Sistema_Solar;
 
-import java.awt.Color;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.Timer; // A ESCOLHA CORRETA!
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -58,8 +58,10 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
         }
         Kp = coletor.getKp();
         Ki = coletor.getKi();
+        Kd = coletor.getKd();
         input_Kp.setText(Double.toString(Kp));
         input_Ki.setText(Double.toString(Ki));
+        input_Kd.setText(Double.toString(Kd));
 
         // Cria e exibe o gráfico de temperatura
         // Adiciona um ouvinte para o slider de hora do dia
@@ -180,39 +182,41 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
         temp_ambiente_entrada.repaint();
         temp_saida_graf.repaint();
     }
+    // Variável de instância na sua classe da interface
+private Timer timerSwing; // Mudei o nome para não confundir
+    
 
     /**
      * Inicia a atualização automática das temperaturas do coletor solar a cada
      * intervalo de tempo. Utiliza um Timer para agendar a execução periódica da
      * atualização.
      */
-    private void iniciarAtualizacaoAutomatica() {
-
-        if (atualizacaoAutomaticaAtiva) {
-            return; // Se já estiver rodando, não cria outro timer
-        }
-
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                // Atualiza a temperatura de saída automaticamente
-                atualizarTemperaturaSaida(hora_dia.getValue());
-            }
-        }, 0, 1500); // Atualização a cada 1500 ms (1.5 segundos)
-        atualizacaoAutomaticaAtiva = true;
+private void iniciarAtualizacaoAutomatica() {
+    if (atualizacaoAutomaticaAtiva) {
+        return; // Se já estiver rodando, não faz nada
     }
 
-    /**
-     * Para a atualização automática das temperaturas, cancelando o timer.
-     */
-    private void pararAtualizacaoAutomatica() {
-        if (timer != null) {
-            timer.cancel();
-            atualizacaoAutomaticaAtiva = false;
+    // Cria um ActionListener, que é o código que será executado
+    ActionListener tarefaDeAtualizacao = new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            // Este código é GARANTIDO de rodar na thread da UI (EDT)
+            atualizarTemperaturaSaida(hora_dia.getValue());
         }
+    };
 
+    // Cria o Timer do Swing para disparar a cada 1000 ms (1 segundo)
+    timerSwing = new Timer(1000, tarefaDeAtualizacao);
+    timerSwing.start(); // Inicia o timer
+
+    atualizacaoAutomaticaAtiva = true;
+}
+
+private void pararAtualizacaoAutomatica() {
+    if (timerSwing != null && timerSwing.isRunning()) {
+        timerSwing.stop(); // Para o timer
     }
+    atualizacaoAutomaticaAtiva = false;
+}
 
     private void limparGraficos() {
         grafico.limparDadosGraficos();
@@ -970,7 +974,8 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
 
         coletor.setReferencia(temperatura_referencia);
         coletor.setKp(Kp);
-
+        coletor.setKi(Ki);
+        coletor.setKd(Kd);
         // Calcula a nova temperatura de saída com o estado atualizado
         double tempSaida = coletor.calcularTemperaturaSaida();
 
@@ -1010,10 +1015,13 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
 
     private void botao_editar_KdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_editar_KdActionPerformed
         // TODO add your handling code here:
+        Kd = Double.parseDouble(input_Kd.getText());
+        input_Kd.setText(Double.toString(Kd));
     }//GEN-LAST:event_botao_editar_KdActionPerformed
 
     private void input_KdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_KdActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_input_KdActionPerformed
 
     private void botao_editar_KiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_editar_KiActionPerformed
@@ -1021,11 +1029,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
 
         Ki = Double.parseDouble(input_Ki.getText());
         input_Ki.setText(Double.toString(Ki));
-        if (!atualizacaoAutomaticaAtiva) {
-            atualizarTemperaturaSaida(tempoAtual);
-        } else {
-            atualizarTemperaturaSaida(hora_dia.getValue());
-        }
+
     }//GEN-LAST:event_botao_editar_KiActionPerformed
 
     private void input_KiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_KiActionPerformed
@@ -1046,13 +1050,8 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
 
     private void botao_editar_referenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_editar_referenciaActionPerformed
         // TODO add your handling code here:
-        temperatura_referencia = temperatura_referencia + 1;
-        referencia.setText(Double.toString(temperatura_referencia));
-        if (!atualizacaoAutomaticaAtiva) {
-            atualizarTemperaturaSaida(tempoAtual);
-        } else {
-            atualizarTemperaturaSaida(hora_dia.getValue());
-        }
+        temperatura_referencia = Double.parseDouble(referencia.getText());
+        referencia.setText(Double.toString(Ki));
     }//GEN-LAST:event_botao_editar_referenciaActionPerformed
 
     private void input_KpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_KpActionPerformed
@@ -1119,11 +1118,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
         // TODO add your handling code here:
         temperatura_ambiente = temperatura_ambiente - 1;
         input_temp_ambiente.setText(Double.toString(temperatura_ambiente));
-        if (!atualizacaoAutomaticaAtiva) {
-            atualizarTemperaturaSaida(tempoAtual);
-        } else {
-            atualizarTemperaturaSaida(hora_dia.getValue());
-        }
+
     }//GEN-LAST:event_button_diminuir_temperatura_ambienteActionPerformed
 
     /**
@@ -1138,11 +1133,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
         temperatura_ambiente = temperatura_ambiente + 1;
 
         input_temp_ambiente.setText(Double.toString(temperatura_ambiente));
-        if (!atualizacaoAutomaticaAtiva) {
-            atualizarTemperaturaSaida(tempoAtual);
-        } else {
-            atualizarTemperaturaSaida(hora_dia.getValue());
-        }
+
     }//GEN-LAST:event_button_aumentar_temperatura_ambienteActionPerformed
 
     private void input_temp_ambienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_temp_ambienteActionPerformed

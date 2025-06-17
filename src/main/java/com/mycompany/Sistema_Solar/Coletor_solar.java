@@ -10,10 +10,16 @@ public class Coletor_solar {
     private boolean primeiraExecucao = true;
     private final double vazaoNominal = 0.02;
     private double REFERENCIA;
-    private double Kp = 0.5;
     private String CAMINHOCSV;
-    private double Ki = 0.1; // Valor inicial, pode ser ajustado
-    private double INTEGRAL = 0.0;
+
+    // --- Constantes do Controlador PID ---
+    private double Kp = 0.5;
+    private double Ki = 0.1;
+    private double Kd = 0.0;
+    // --- Variáveis de estado do Controlador PID ---
+    private double acaoIntegral = 0.0;
+    private double erroAnterior = 0.0;  // NOVO: Erro da iteração anterior
+    private final double DELTA_T = 1.0;
 
     public Coletor_solar(double irradiacao_solar, double temperaturaAmbiente, double porcentagem_vazao, double referencia, String caminhoCSV) {
         this.irradiacao_solar = irradiacao_solar;
@@ -121,33 +127,69 @@ public class Coletor_solar {
         this.Ki = KiNovo;
     }
 
+    public double getKd() {
+        return Kd;
+    }
+
+    public void setKd(double kdNovo) {
+        this.Kd = kdNovo;
+    }
+
     private double somaErro = 0;
 
-    public void controleVazao(double temperaturaSaida) {
-        double erro = temperaturaSaida - REFERENCIA;
+public void controleVazao(double temperaturaSaida) {
+    // 1. Calcular o erro atual
+    double erro = temperaturaSaida - REFERENCIA;
 
-        // Faixa morta (histerese)
-        double faixa = 0;
+    // Faixa morta (histerese)
+    double faixa = 0;
 
-        if (Math.abs(erro) > faixa) {
-            INTEGRAL += erro; // Ação integral
+    if (Math.abs(erro) > faixa) {
+        // 2. Calcular os termos P, I, D
+        double acaoProporcional = Kp * erro;
+        double acaoDerivativa = Kd * (erro - erroAnterior) / DELTA_T;
+        
+        // A ação integral é calculada separadamente por causa do anti-windup
+        double novaAcaoIntegral = acaoIntegral + (Ki * erro * DELTA_T); // Boa prática: multiplicar por DELTA_T
 
-            double ajuste = Kp * erro + Ki * INTEGRAL;
+        // 3. Somar os termos para obter o ajuste total (sem a integral antiga)
+        double ajuste = acaoProporcional + novaAcaoIntegral + acaoDerivativa;
 
-            double novaPorcentagem = getPorcentagemVazao() + ajuste;
+        // 4. Calcular a saída do controlador (antes de limitar)
+        double novaPorcentagem = getPorcentagemVazao() + ajuste;
 
-            if (novaPorcentagem > 100) {
-                novaPorcentagem = 100;
-            } else if (novaPorcentagem < 10) {
-                novaPorcentagem = 10;
+        // --- LÓGICA ANTI-WINDUP (Clampeamento) ---
+        // Verificamos se a saída saturou. Se a nova porcentagem está fora dos limites...
+        if (novaPorcentagem > 100 || novaPorcentagem < 10) {
+
+            // Se o erro estivesse na direção oposta, permitiríamos a atualização para "desenrolar" (unwind).
+            if ((novaPorcentagem > 100 && erro > 0) || (novaPorcentagem < 10 && erro < 0)) {
+                // Não faz nada, `acaoIntegral` permanece com seu valor antigo.
+            } else {
+                 acaoIntegral = novaAcaoIntegral; // Permite o "unwind"
             }
-
-            setPorcentagemVazao(novaPorcentagem);
-            System.out.println("Ajustando vazão para: " + novaPorcentagem + "%");
         } else {
-            System.out.println("Dentro da faixa. Vazão mantida em: " + getPorcentagemVazao() + "%");
+            // Se não está saturado, atualiza a integral normalmente.
+            acaoIntegral = novaAcaoIntegral;
         }
+
+        // 5. Limitar a vazão (saturação do atuador)
+        if (novaPorcentagem > 100) {
+            novaPorcentagem = 100;
+        } else if (novaPorcentagem < 10) {
+            novaPorcentagem = 10;
+        }
+
+        setPorcentagemVazao(novaPorcentagem);
+        System.out.println("Ajustando vazão para: " + String.format("%.2f", novaPorcentagem) + "%");
+        
+    } else {
+        System.out.println("Dentro da faixa. Vazão mantida em: " + String.format("%.2f", getPorcentagemVazao()) + "%");
     }
+
+    // 6. Atualizar o erro anterior para a próxima iteração
+    this.erroAnterior = erro;
+}
 
     public double calcularTemperaturaSaida() {
         final double CALOR_ESPECIFICO_AGUA = 4186;
