@@ -263,18 +263,18 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
         button_importar_dados1 = new javax.swing.JToggleButton();
         jScrollPaneMain = new javax.swing.JScrollPane();
         container_filho = new javax.swing.JPanel();
-        temp_saida_graf = new javax.swing.JPanel();
-        container_definirhora = new javax.swing.JPanel();
+        temp_saida_graf = new RoundedPanelBordaShadow();
+        container_definirhora = new RoundedPanelBordaShadow();
         hora_dia = new javax.swing.JSlider();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        temp_ambiente_entrada = new javax.swing.JPanel();
+        temp_ambiente_entrada = new RoundedPanelBordaShadow();
         jLabel6 = new javax.swing.JLabel();
         input_temp_ambiente = new javax.swing.JTextField();
         button_aumentar_temperatura_ambiente = new javax.swing.JToggleButton();
         button_diminuir_temperatura_ambiente = new javax.swing.JToggleButton();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = new RoundedPanelBordaShadow();
         botao_tempo_real = new javax.swing.JRadioButton();
         botao_definir_tempo = new javax.swing.JRadioButton();
         jLabel10 = new javax.swing.JLabel();
@@ -291,7 +291,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         value_temp_entrada = new javax.swing.JLabel();
         button_importar_dados = new javax.swing.JToggleButton();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel3 = new RoundedPanelBorda();
         botao_editar_Kp = new javax.swing.JToggleButton();
         ref_label1 = new javax.swing.JLabel();
         input_Kp = new javax.swing.JTextField();
@@ -305,12 +305,13 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
         ref_label3 = new javax.swing.JLabel();
         input_Kd = new javax.swing.JTextField();
         botao_editar_Kd = new javax.swing.JToggleButton();
-        jPanel4 = new javax.swing.JPanel();
+        jPanel4 = new RoundedPanelBorda();
         jLabel12 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         button_tipo_controle = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -344,8 +345,9 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
         container_filho.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         container_filho.setName(""); // NOI18N
 
+        temp_saida_graf.setBackground(new java.awt.Color(153, 255, 255));
         temp_saida_graf.setBackground(new java.awt.Color(255, 255, 255));
-        temp_saida_graf.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, null, null));
+        temp_saida_graf.setForeground(new java.awt.Color(204, 255, 255));
 
         javax.swing.GroupLayout temp_saida_grafLayout = new javax.swing.GroupLayout(temp_saida_graf);
         temp_saida_graf.setLayout(temp_saida_grafLayout);
@@ -358,8 +360,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
             .addGap(0, 363, Short.MAX_VALUE)
         );
 
-        container_definirhora.setBackground(new java.awt.Color(255, 255, 255));
-        container_definirhora.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, null, null));
+        container_definirhora.setBackground(new java.awt.Color(204, 204, 204));
         container_definirhora.setAlignmentY(0.6F);
 
         hora_dia.setBackground(new java.awt.Color(255, 255, 255));
@@ -379,6 +380,8 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Hora solar (h) ");
+
+        container_definirhora.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout container_definirhoraLayout = new javax.swing.GroupLayout(container_definirhora);
         container_definirhora.setLayout(container_definirhoraLayout);
@@ -411,8 +414,8 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
                 .addGap(7, 7, 7))
         );
 
+        temp_ambiente_entrada.setBackground(new java.awt.Color(204, 255, 255));
         temp_ambiente_entrada.setBackground(new java.awt.Color(255, 255, 255));
-        temp_ambiente_entrada.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, null, null));
 
         javax.swing.GroupLayout temp_ambiente_entradaLayout = new javax.swing.GroupLayout(temp_ambiente_entrada);
         temp_ambiente_entrada.setLayout(temp_ambiente_entradaLayout);
@@ -466,8 +469,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, null, null));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         botao_tempo_real.setBackground(new java.awt.Color(255, 255, 255));
         tipo_simulacao.add(botao_tempo_real);
@@ -500,6 +502,8 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
             }
         });
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -516,7 +520,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
                             .addComponent(botao_tipo_simulacao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(botao_tempo_real, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 48, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 54, Short.MAX_VALUE)
                                 .addComponent(botao_definir_tempo)))))
                 .addGap(24, 24, 24))
         );
@@ -618,8 +622,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
                 .addGap(36, 36, 36))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, null, null));
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setPreferredSize(new java.awt.Dimension(175, 231));
 
         botao_editar_Kp.setText("➤");
@@ -730,6 +733,8 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
             }
         });
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -764,7 +769,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
                                 .addComponent(input_Kd, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botao_editar_Kd, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 9, Short.MAX_VALUE)))
+                        .addGap(0, 15, Short.MAX_VALUE)))
                 .addGap(0, 0, 0))
         );
         jPanel3Layout.setVerticalGroup(
@@ -795,8 +800,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
         );
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, null, null));
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
         jPanel4.setPreferredSize(new java.awt.Dimension(175, 161));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -821,19 +825,21 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
         button_tipo_controle.setToolTipText("");
         button_tipo_controle.setAlignmentX(0.5F);
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jRadioButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jRadioButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(button_tipo_controle, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -846,19 +852,21 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
                 .addComponent(jRadioButton2)
                 .addGap(18, 18, 18)
                 .addComponent(button_tipo_controle, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Modelo de entradas e saídas do coletor solar");
 
+        jToggleButton1.setText("Voltar");
+
         javax.swing.GroupLayout container_filhoLayout = new javax.swing.GroupLayout(container_filho);
         container_filho.setLayout(container_filhoLayout);
         container_filhoLayout.setHorizontalGroup(
             container_filhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(container_filhoLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(0, 18, Short.MAX_VALUE)
                 .addGroup(container_filhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(container_filhoLayout.createSequentialGroup()
                         .addGroup(container_filhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -877,21 +885,25 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
                         .addGroup(container_filhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(temp_ambiente_entrada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(temp_saida_graf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(container_filhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(239, 239, 239))
+                        .addContainerGap(204, Short.MAX_VALUE))
                     .addGroup(container_filhoLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(63, 63, 63))))
+            .addGroup(container_filhoLayout.createSequentialGroup()
+                .addComponent(jToggleButton1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         container_filhoLayout.setVerticalGroup(
             container_filhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, container_filhoLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addComponent(jToggleButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(container_filhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(container_filhoLayout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -906,9 +918,9 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
                                 .addGroup(container_filhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
                                     .addComponent(input_temp_ambiente, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(container_definirhora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(container_tabela, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(container_filhoLayout.createSequentialGroup()
                         .addComponent(temp_ambiente_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -916,9 +928,9 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
                         .addComponent(temp_saida_graf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(container_filhoLayout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addContainerGap(207, Short.MAX_VALUE))
         );
 
         jScrollPaneMain.setViewportView(container_filho);
@@ -1217,6 +1229,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPaneMain;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel ref_label;
     private javax.swing.JLabel ref_label1;
     private javax.swing.JLabel ref_label2;
