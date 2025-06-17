@@ -120,7 +120,7 @@
                                       <Component id="jLabel6" min="-2" pref="176" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="input_temp_ambiente" min="-2" pref="55" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                                      <EmptySpace type="unrelated" pref="21" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="button_aumentar_temperatura_ambiente" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
                                           <Component id="button_diminuir_temperatura_ambiente" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
@@ -301,7 +301,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="2" name="C:\Users\Davil\OneDrive\Documentos\UFSC\Projeto_coletor\modelo_coletor_solar\src\main\java\com\mycompany\Sistema_Solar\relogiosol.png"/>
+                      <Image iconType="3" name="/com/mycompany/Sistema_Solar/relogiosol.png"/>
                     </Property>
                   </Properties>
                 </Component>

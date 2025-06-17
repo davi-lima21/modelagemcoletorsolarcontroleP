@@ -27,7 +27,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
     double temperatura_referencia = 70;
     Importar_Dados importarDados = new Importar_Dados(this, true);
     private double Kp;
-    private String caminhoCSV = "C:\\Users\\Davil\\OneDrive\\Documentos\\UFSC\\Projeto_coletor\\modelo_coletor_solar_malha_fechada\\src\\main\\java\\com\\mycompany\\Sistema_Solar\\dados.csv";
+    private String caminhoCSV = "C:\\Users\\EAS.CTC\\Documents\\IC\\Projeto Coletor Solar\\modelagemcoletorsolarcontroleP\\src\\main\\resources\\com\\mycompany\\Sistema_Solar\\dados.csv";
     double Ki;
     double Kd;
     //variaveis globais configuracao dos graficos
@@ -376,7 +376,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Davil\\OneDrive\\Documentos\\UFSC\\Projeto_coletor\\modelo_coletor_solar\\src\\main\\java\\com\\mycompany\\Sistema_Solar\\relogiosol.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/Sistema_Solar/relogiosol.png"))); // NOI18N
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Hora solar (h) ");
@@ -874,7 +874,7 @@ public class Sistema_Solar_Interface extends javax.swing.JFrame {
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(input_temp_ambiente, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 21, Short.MAX_VALUE)
                                 .addGroup(container_filhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(button_aumentar_temperatura_ambiente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(button_diminuir_temperatura_ambiente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
