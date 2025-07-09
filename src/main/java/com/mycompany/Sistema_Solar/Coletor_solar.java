@@ -15,11 +15,11 @@ public class Coletor_solar {
     // --- Constantes do Controlador PID ---
     private double Kp = 0.5;
     private double Ki = 0.1;
-    private double Kd = 0.0;
+    private double Kd = 0.125;
     // --- Variáveis de estado do Controlador PID ---
     private double acaoIntegral = 0.0;
     private double erroAnterior = 0.0;  // NOVO: Erro da iteração anterior
-    private final double DELTA_T = 1.0;
+    private final double DELTA_T = 1.5;
 
     public Coletor_solar(double irradiacao_solar, double temperaturaAmbiente, double porcentagem_vazao, double referencia, String caminhoCSV) {
         this.irradiacao_solar = irradiacao_solar;
